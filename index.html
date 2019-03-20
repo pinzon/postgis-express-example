@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="form" action="/search" method="post">
+      <label for="latitude">Latitude</label>
+      <input name="latitude" value="21.1697" /> <br />
+      <br />
+      <label for="Longitude">Longitude</label>
+      <input name="longitude" value="-86.8490" />
+      <input type="submit" value="Buscar" />
+    </form>
+    <h1>Pais: <span id="result"></span></h1>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+      window.onload = function() {
+        $("#form").submit(function(event) {
+          event.preventDefault();
+          $.ajax({
+            type: "POST",
+            url: "/search",
+            data: $("#form").serialize()
+          }).done(r => {
+            if (r.results) {
+              $("#result").text(r.country);
+            } else {
+              $("#result").text('0 resultados');
+            }
+          });
+        });
+      };
+    </script>
+  </body>
+</html>
